@@ -4,6 +4,7 @@ import { logout, selectCurrentUser } from '../auth/authSlice';
 import { useGetProblemsQuery } from '../problems/problemsApi';
 import { useGetAnswersQuery } from '../answers/answersApi';
 import { Loading, ErrorMessage } from '../../components/common/StatusMessage';
+import Avatar from '../../components/common/Avatar';
 import { sameId } from '../../utils/id';
 import {
   calculateReputationScore,
@@ -58,20 +59,23 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      <div className="card">
-        <h3>{user.name}</h3>
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p>
-          <strong>Cohort:</strong> {user.cohort ?? '—'}
-        </p>
-        <p>
-          <strong>Role:</strong>{' '}
-          <span className={`badge ${user.role === 'admin' ? 'badge-solved' : 'badge-open'}`}>
-            {user.role ?? 'student'}
-          </span>
-        </p>
+      <div className="card question-detail-author" style={{ alignItems: 'flex-start' }}>
+        <Avatar name={user.name} size={48} />
+        <div>
+          <h3 style={{ marginBottom: 2 }}>{user.name}</h3>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p>
+            <strong>Cohort:</strong> {user.cohort ?? '—'}
+          </p>
+          <p>
+            <strong>Role:</strong>{' '}
+            <span className={`badge ${user.role === 'admin' ? 'badge-solved' : 'badge-open'}`}>
+              {user.role ?? 'student'}
+            </span>
+          </p>
+        </div>
       </div>
 
       {isLoading && <Loading label="Loading your activity…" />}

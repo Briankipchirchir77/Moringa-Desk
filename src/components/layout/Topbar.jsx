@@ -41,7 +41,9 @@ export default function Topbar() {
   return (
     <header className="topbar">
       <NavLink to="/dashboard" className="topbar-mobile-brand">
-        <Logo />
+        <span className="logo-badge">
+          <Logo tone="light" size={20} />
+        </span>
         MoringaDesk
       </NavLink>
 
