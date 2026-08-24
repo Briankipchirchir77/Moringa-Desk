@@ -10,6 +10,7 @@ const MENU_ITEMS = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/questions', label: 'Questions' },
   { to: '/ask', label: 'Ask Question' },
+  { to: '/explore', label: 'Explore' },
   { to: '/faq', label: 'FAQ' },
   { to: '/notifications', label: 'Notifications' },
   { to: '/profile', label: 'Profile' },

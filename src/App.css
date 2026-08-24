@@ -1440,3 +1440,50 @@ textarea {
   color: var(--navy-900);
   border-color: var(--orange-500);
 }
+
+/* ==========================================================================
+   Explore (external Stack Overflow API)
+   ========================================================================== */
+
+.explore-search {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.explore-search input {
+  flex: 1;
+}
+.explore-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.explore-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+a.explore-question-row {
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+a.explore-question-row:hover {
+  box-shadow: var(--shadow-md, 0 4px 14px rgba(0, 0, 0, 0.08));
+  transform: translateY(-1px);
+}
+.explore-question-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+.explore-question-meta span {
+  font-weight: 600;
+  color: var(--navy-900);
+}

@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { to: '/dashboard', label: 'Dashboard', icon: '▦' },
   { to: '/questions', label: 'Questions', icon: '?' },
   { to: '/ask', label: 'Ask Question', icon: '+' },
+  { to: '/explore', label: 'Explore', icon: '🌐' },
   { to: '/faq', label: 'FAQ', icon: '📖' },
   { to: '/notifications', label: 'Notifications', icon: '🔔' },
   { to: '/profile', label: 'Profile', icon: '👤' },

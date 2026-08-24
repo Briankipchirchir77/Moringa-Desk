@@ -18,6 +18,7 @@ import ProblemsListPage from './features/problems/ProblemsListPage';
 import ProblemDetailPage from './features/problems/ProblemDetailPage';
 import AskProblemPage from './features/problems/AskProblemPage';
 import FaqPage from './features/faqs/FaqPage';
+import ExplorePage from './features/community/ExplorePage';
 import NotificationsPage from './features/notifications/NotificationsPage';
 import ProfilePage from './features/profile/ProfilePage';
 import AdminLayout from './features/admin/AdminLayout';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/questions" element={<ProblemsListPage />} />
           <Route path="/questions/:id" element={<ProblemDetailPage />} />
           <Route path="/faq" element={<FaqPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<DashboardPage />} />
