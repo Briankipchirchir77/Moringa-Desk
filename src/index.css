@@ -1,15 +1,15 @@
 :root {
-  --ink: #18332b;
-  --muted: #6b7c74;
-  --paper: #f5f3ed;
-  --surface: #fffdf8;
-  --line: #dfe5dd;
-  --green: #185b45;
-  --green-dark: #0f3d31;
-  --mint: #dceee2;
-  --coral: #e47b5d;
-  --gold: #e9bd67;
-  --shadow: 0 14px 35px rgba(24, 51, 43, .08);
+  --ink: #17324d;
+  --muted: #687b8d;
+  --paper: #f4f7fa;
+  --surface: #fff;
+  --line: #dbe3eb;
+  --green: #155a87;
+  --green-dark: #103b5c;
+  --mint: #e5f1fa;
+  --coral: #ed7d3a;
+  --gold: #f2a23a;
+  --shadow: 0 14px 35px rgba(23, 50, 77, .09);
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--ink);
   background: var(--paper);
