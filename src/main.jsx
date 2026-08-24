@@ -1,26 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 import App from './App';
-
-async function enableMocking() {
-  if (process.env.NODE_NODE !== 'development') {
-    return;
-  }
-
-  const { worker } = await import('./mocks/browser');
-
-  // Start the worker and await registration
-  return worker.start({
-    onUnhandledRequest: 'bypass',
-  });
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-enableMocking().then(() => {
-  root.render(
-    <React.StrictMode>
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
       <App />
-    </React.StrictMode>
-  );
-});
+    </Provider>
+  </React.StrictMode>,
+);
