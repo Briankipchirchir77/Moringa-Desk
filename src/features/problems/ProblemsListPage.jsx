@@ -9,6 +9,7 @@ import { selectCurrentUser } from '../auth/authSlice';
 import QuestionRow from './QuestionRow';
 import { Loading, ErrorMessage } from '../../components/common/StatusMessage';
 import { countAnswersByProblem } from '../../utils/answerCounts';
+import CommunityPulse from '../community/CommunityPulse';
 
 const FILTERS = [
   { id: 'all', label: 'All' },
@@ -87,6 +88,8 @@ export default function ProblemsListPage() {
           </Link>
         )}
       </div>
+
+      <CommunityPulse />
 
       <input
         type="search"
