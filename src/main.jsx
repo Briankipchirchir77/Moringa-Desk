@@ -5,10 +5,11 @@ import { store } from './app/store';
 import App from './App';
 import './index.css';
 
-// Until a real backend exists, dev builds run against an MSW mock API
-// (see src/mocks/) instead of a live server.
+// Until a real backend exists, every build (dev AND production) runs
+// against an MSW mock API (see src/mocks/) instead of a live server —
+// there's nothing else for '/api/*' calls to hit, including on the
+// deployed Vercel build, which is also mode: production.
 async function enableMocking() {
-  if (!import.meta.env.DEV) return;
   const { worker } = await import('./mocks/browser');
   return worker.start({ onUnhandledRequest: 'bypass' });
 }
