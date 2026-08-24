@@ -17,7 +17,8 @@ export const handlers = [
   // ---------------------------------------------------------------- auth
   http.post('/api/auth/login', async ({ request }) => {
     const { email, password } = await request.json();
-    const user = users.find((u) => u.email === email && u.password === password);
+    const normalizedEmail = email?.trim().toLowerCase();
+    const user = users.find((u) => u.email.toLowerCase() === normalizedEmail && u.password === password);
     if (!user) {
       return HttpResponse.json({ message: 'Invalid email or password.' }, { status: 401 });
     }
@@ -25,16 +26,17 @@ export const handlers = [
   }),
 
   http.post('/api/auth/register', async ({ request }) => {
-    const { name, email, password } = await request.json();
-    if (users.some((u) => u.email === email)) {
+    const { name, email, password, role } = await request.json();
+    const normalizedEmail = email?.trim().toLowerCase();
+    if (users.some((u) => u.email.toLowerCase() === normalizedEmail)) {
       return HttpResponse.json({ message: 'An account with that email already exists.' }, { status: 409 });
     }
     const user = {
       id: nextId('users'),
-      name,
-      email,
+      name: name?.trim(),
+      email: normalizedEmail,
       password,
-      role: 'student',
+      role: role === 'admin' ? 'admin' : 'student',
       cohort: null,
     };
     users.push(user);

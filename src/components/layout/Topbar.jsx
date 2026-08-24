@@ -77,7 +77,7 @@ export default function Topbar() {
             <NavLink to="/profile" className="topbar-user">
               <span className="topbar-user-text">
                 <strong>{user.name}</strong>
-                <small>{user.cohort || 'Student'}</small>
+                <small>{user.cohort || (user.role === 'admin' ? 'Admin' : 'Student')}</small>
               </span>
               <Avatar name={user.name} size={36} />
             </NavLink>

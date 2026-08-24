@@ -6,6 +6,8 @@ import Logo from '../../components/layout/Logo';
 
 export const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showForgotHint, setShowForgotHint] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const status = useSelector(selectAuthStatus);
@@ -38,7 +40,7 @@ export const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
           <span className="logo-badge">
             <Logo tone="light" size={20} />
           </span>
-          MoringaSchool
+          MoringaDesk
         </div>
 
         <div className="auth-brand-copy">
@@ -71,29 +73,59 @@ export const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
+              <div className="password-field">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? 'Hide' : 'Show'}
+                </button>
+              </div>
             </div>
             <button type="submit" className="btn btn-primary" disabled={status === 'loading'}>
               {status === 'loading' ? 'Signing In…' : 'Sign In'}
             </button>
           </form>
-          <p>
-            New to MoringaDesk?{' '}
-            {onNavigateToRegister ? (
+
+          <button type="button" className="link-button" onClick={() => setShowForgotHint((v) => !v)}>
+            Forgot your password?
+          </button>
+          {showForgotHint && (
+            <p className="auth-inline-hint">
+              Password resets aren't available in this demo — ask your instructor, or use one of the demo accounts below.
+            </p>
+          )}
+
+          {onNavigateToRegister ? (
+            <p>
+              New to MoringaDesk?{' '}
               <button type="button" onClick={onNavigateToRegister}>
                 Create an account
               </button>
-            ) : (
-              <Link to="/register">Create an account</Link>
-            )}
-          </p>
+            </p>
+          ) : (
+            <div className="auth-role-links">
+              <span>New to MoringaDesk?</span>
+              <div className="auth-role-links-row">
+                <Link to="/register?role=student" className="auth-role-link auth-role-link-student">
+                  Create student account
+                </Link>
+                <Link to="/register?role=admin" className="auth-role-link auth-role-link-admin">
+                  Create admin account
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

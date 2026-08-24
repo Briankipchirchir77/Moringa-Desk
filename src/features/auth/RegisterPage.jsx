@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   registerThunk,
   clearAuthError,
@@ -11,12 +11,16 @@ import {
 import Logo from '../../components/layout/Logo';
 
 export const RegisterPage = ({ onNavigateToLogin, onRegisterSuccess }) => {
+  const [searchParams] = useSearchParams();
+  const initialRole = searchParams.get('role') === 'admin' ? 'admin' : 'student';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
+  const [role, setRole] = useState(initialRole);
   const [validationError, setValidationError] = useState('');
 
   const dispatch = useDispatch();
@@ -47,7 +51,7 @@ export const RegisterPage = ({ onNavigateToLogin, onRegisterSuccess }) => {
     }
     setValidationError('');
     const { name, email, password } = formData;
-    dispatch(registerThunk({ name, email, password }));
+    dispatch(registerThunk({ name, email, password, role }));
   };
 
   return (
@@ -57,7 +61,7 @@ export const RegisterPage = ({ onNavigateToLogin, onRegisterSuccess }) => {
           <span className="logo-badge">
             <Logo tone="light" size={20} />
           </span>
-          MoringaSchool
+          MoringaDesk
         </div>
 
         <div className="auth-brand-copy">
@@ -70,8 +74,25 @@ export const RegisterPage = ({ onNavigateToLogin, onRegisterSuccess }) => {
 
       <div className="auth-form-panel">
         <div className="auth-container">
-          <h2>Create your account</h2>
+          <h2>Create your MoringaDesk account</h2>
           <p>Join MoringaDesk with your Moringa School credentials</p>
+
+          <div className="role-toggle" role="group" aria-label="Account type">
+            <button
+              type="button"
+              className={role === 'student' ? 'active' : ''}
+              onClick={() => setRole('student')}
+            >
+              Student
+            </button>
+            <button
+              type="button"
+              className={role === 'admin' ? 'active' : ''}
+              onClick={() => setRole('admin')}
+            >
+              Admin
+            </button>
+          </div>
 
           {(validationError || error) && (
             <div className="error-message">{validationError || error}</div>
@@ -89,7 +110,7 @@ export const RegisterPage = ({ onNavigateToLogin, onRegisterSuccess }) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Student Email</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
@@ -123,7 +144,7 @@ export const RegisterPage = ({ onNavigateToLogin, onRegisterSuccess }) => {
               />
             </div>
             <button type="submit" className="btn btn-primary" disabled={status === 'loading'}>
-              {status === 'loading' ? 'Creating Account…' : 'Register'}
+              {status === 'loading' ? 'Creating Account…' : `Create ${role === 'admin' ? 'Admin' : 'Student'} Account`}
             </button>
           </form>
           <p>
