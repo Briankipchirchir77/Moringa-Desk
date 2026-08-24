@@ -404,6 +404,100 @@ textarea {
   width: 100%;
 }
 
+.password-field {
+  position: relative;
+  display: flex;
+}
+.password-field input {
+  padding-right: 56px;
+}
+.password-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--orange-600);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.link-button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--orange-600);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.auth-inline-hint {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--gray-600);
+}
+
+.role-toggle {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0 6px;
+}
+.role-toggle button {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--navy-900);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.role-toggle button.active {
+  background: var(--navy-900);
+  border-color: var(--navy-900);
+  color: var(--white);
+}
+
+.auth-role-links {
+  margin-top: 18px;
+  font-size: 0.9rem;
+}
+.auth-role-links > span {
+  color: var(--gray-600);
+}
+.auth-role-links-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 6px;
+}
+.auth-role-link {
+  position: relative;
+  font-weight: 600;
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.2s ease, color 0.15s ease;
+}
+.auth-role-link:hover,
+.auth-role-link:focus-visible {
+  background-size: 100% 2px;
+}
+.auth-role-link-student {
+  color: var(--orange-600);
+}
+.auth-role-link-admin {
+  color: var(--navy-600);
+}
+
 @media (max-width: 860px) {
   .auth-split {
     grid-template-columns: 1fr;
