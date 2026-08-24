@@ -10,7 +10,7 @@ import {
 } from './problemsApi';
 import { useGetAnswersByProblemQuery } from '../answers/answersApi';
 import { useGetTagsQuery } from '../tags/tagsApi';
-import { useGetUsersQuery } from '../users/usersApi';
+import { useGetUsersQuery } from '../auth/users/usersApi';
 import { selectCurrentUser } from '../auth/authSlice';
 import AnswerList from '../answers/AnswerList';
 import AnswerForm from '../answers/AnswerForm';

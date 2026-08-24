@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useGetProblemsQuery } from './problemsApi';
 import { useGetAnswersQuery } from '../answers/answersApi';
 import { useGetTagsQuery } from '../tags/tagsApi';
-import { useGetUsersQuery } from '../users/usersApi';
+import { useGetUsersQuery } from '../auth/users/usersApi';
 import { selectCurrentUser } from '../auth/authSlice';
 import QuestionRow from './QuestionRow';
 import { Loading, ErrorMessage } from '../../components/common/StatusMessage';
