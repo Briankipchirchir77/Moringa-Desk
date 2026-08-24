@@ -82,3 +82,10 @@ const authSlice = createSlice({
 
 export const { logout, clearAuthError } = authSlice.actions;
 export default authSlice.reducer;
+
+// Selectors — most pages/components read auth state through these rather
+// than reaching into state.auth directly.
+export const selectCurrentUser = (state) => state.auth.user;
+export const selectIsAuthenticated = (state) => Boolean(state.auth.token);
+export const selectAuthStatus = (state) => state.auth.status;
+export const selectAuthError = (state) => state.auth.error;
