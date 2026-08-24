@@ -18,7 +18,9 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <NavLink to="/dashboard" className="sidebar-brand">
-        <Logo tone="light" />
+        <span className="logo-badge">
+          <Logo tone="light" size={20} />
+        </span>
         MoringaDesk
       </NavLink>
 
