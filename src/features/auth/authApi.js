@@ -1,3 +1,5 @@
+import { safeJson } from '../../utils/http';
+
 const API_BASE_URL = '/api/auth';
 
 export const loginUser = async (credentials) => {
@@ -7,12 +9,12 @@ export const loginUser = async (credentials) => {
     body: JSON.stringify(credentials),
   });
 
+  const data = await safeJson(response);
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to log in');
+    throw new Error(data?.message || 'Failed to log in — is the server running?');
   }
 
-  return response.json(); // Expected payload: { user, token }
+  return data; // Expected payload: { user, token }
 };
 
 export const registerUser = async (userData) => {
@@ -22,10 +24,10 @@ export const registerUser = async (userData) => {
     body: JSON.stringify(userData),
   });
 
+  const data = await safeJson(response);
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to register');
+    throw new Error(data?.message || 'Failed to register — is the server running?');
   }
 
-  return response.json(); // Expected payload: { user, token }
+  return data;
 };

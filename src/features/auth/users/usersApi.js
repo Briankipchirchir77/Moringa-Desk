@@ -1,3 +1,5 @@
+import { safeJson } from '../../../utils/http';
+
 const API_BASE_URL = '/api/users';
 
 export const fetchUserProfile = async (token) => {
@@ -5,12 +7,12 @@ export const fetchUserProfile = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
+  const data = await safeJson(response);
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to fetch user profile');
+    throw new Error(data?.message || 'Failed to fetch user profile');
   }
 
-  return response.json();
+  return data;
 };
 
 export const updateUserProfile = async (profileData, token) => {
@@ -23,10 +25,10 @@ export const updateUserProfile = async (profileData, token) => {
     body: JSON.stringify(profileData),
   });
 
+  const data = await safeJson(response);
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to update profile');
+    throw new Error(data?.message || 'Failed to update profile');
   }
 
-  return response.json();
+  return data;
 };
