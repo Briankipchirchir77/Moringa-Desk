@@ -1,10 +1,16 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/routing/ProtectedRoute';
 import AdminRoute from './components/routing/AdminRoute';
-import { selectIsAuthenticated } from './features/auth/authSlice';
+import { Loading } from './components/common/StatusMessage';
+import {
+  fetchCurrentUserThunk,
+  selectAuthInitialized,
+  selectIsAuthenticated,
+} from './features/auth/authSlice';
 import LoginPage from './features/auth/LoginPage';
 import RegisterPage from './features/auth/RegisterPage';
 import DashboardPage from './features/dashboard/DashboardPage';
@@ -27,6 +33,21 @@ function HomeRedirect() {
 }
 
 function App() {
+  const dispatch = useDispatch();
+  const initialized = useSelector(selectAuthInitialized);
+
+  useEffect(() => {
+    if (!initialized) dispatch(fetchCurrentUserThunk());
+  }, [initialized, dispatch]);
+
+  // A stored token exists but hasn't been resolved back into a user yet —
+  // hold off rendering routes so ProtectedRoute/AdminRoute don't make a
+  // redirect decision (e.g. bouncing a still-valid admin to /login) before
+  // we know who's actually logged in.
+  if (!initialized) {
+    return <Loading label="Loading MoringaDesk…" />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>

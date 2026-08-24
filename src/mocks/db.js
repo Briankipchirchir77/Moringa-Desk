@@ -3,7 +3,7 @@
 // Demo login: any seeded user's email below + password "password123".
 
 let nextIds = {
-  users: 6,
+  users: 8,
   problems: 4,
   answers: 4,
   tags: 17,
@@ -52,6 +52,22 @@ export const users = [
     id: '5',
     name: 'Sarah Jane',
     email: 'sarah.jane@moringaschool.com',
+    password: 'password123',
+    role: 'admin',
+    cohort: 'Technical Mentor',
+  },
+  {
+    id: '6',
+    name: 'John',
+    email: 'john2@gmail.com',
+    password: 'password123',
+    role: 'admin',
+    cohort: 'Technical Mentor',
+  },
+  {
+    id: '7',
+    name: 'Brian Kipchirchir',
+    email: 'briankipchirchir964@gmail.com',
     password: 'password123',
     role: 'admin',
     cohort: 'Technical Mentor',
