@@ -5,11 +5,13 @@ import { store } from './app/store';
 import App from './App';
 import './index.css';
 
-// Until a real backend exists, every build (dev AND production) runs
-// against an MSW mock API (see src/mocks/) instead of a live server —
-// there's nothing else for '/api/*' calls to hit, including on the
-// deployed Vercel build, which is also mode: production.
+// A real Flask + PostgreSQL backend now exists (see /backend). When
+// VITE_API_URL points to it, use it directly and skip the mock entirely.
+// When it's unset (e.g. the deployed Vercel build before the backend is
+// deployed too), fall back to the MSW mock API (see src/mocks/) so the
+// app still works standalone.
 async function enableMocking() {
+  if (import.meta.env.VITE_API_URL) return;
   const { worker } = await import('./mocks/browser');
   return worker.start({ onUnhandledRequest: 'bypass' });
 }

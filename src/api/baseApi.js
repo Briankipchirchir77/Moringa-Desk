@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { apiBaseUrl } from '../utils/http';
 
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || '/api',
+    baseUrl: apiBaseUrl(),
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth?.token;
       if (token) {

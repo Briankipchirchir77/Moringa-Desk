@@ -1,6 +1,6 @@
-import { safeJson } from '../../../utils/http';
+import { safeJson, apiBaseUrl } from '../../../utils/http';
 
-const API_BASE_URL = '/api/users';
+const API_BASE_URL = `${apiBaseUrl()}/users`;
 
 export const fetchUserProfile = async (token) => {
   const response = await fetch(`${API_BASE_URL}/me`, {
