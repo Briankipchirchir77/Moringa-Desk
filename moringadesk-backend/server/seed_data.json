@@ -1,0 +1,260 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Brian Kipchirchir",
+      "email": "brian@moringaschool.com",
+      "password": "password123",
+      "role": "student",
+      "cohort": "Cohort 27"
+    },
+    {
+      "id": "2",
+      "name": "Faith Wanjiru",
+      "email": "faith@moringaschool.com",
+      "password": "password123",
+      "role": "student",
+      "cohort": "Cohort 28"
+    },
+    {
+      "id": "3",
+      "name": "Admin User",
+      "email": "admin@moringaschool.com",
+      "password": "password123",
+      "role": "admin",
+      "cohort": null
+    },
+    {
+      "name": "Brian Kipchirchir",
+      "email": "brian.kipchirchir2@student.moringaschool.com",
+      "password": "12345678",
+      "role": "student",
+      "cohort": "2",
+      "id": "lNbqnODJ2tQ",
+      "bio": ""
+    }
+  ],
+  "tags": [
+    {
+      "id": "1",
+      "name": "JavaScript"
+    },
+    {
+      "id": "2",
+      "name": "Python"
+    },
+    {
+      "id": "3",
+      "name": "React"
+    },
+    {
+      "id": "4",
+      "name": "Flask"
+    },
+    {
+      "id": "5",
+      "name": "Git"
+    },
+    {
+      "id": "6",
+      "name": "Stage 1"
+    },
+    {
+      "id": "7",
+      "name": "Stage 2"
+    },
+    {
+      "id": "8",
+      "name": "Logic"
+    },
+    {
+      "id": "9",
+      "name": "Technical"
+    }
+  ],
+  "problems": [
+    {
+      "id": "1",
+      "title": "I click a button that updates state, but logging it right after still shows the old value",
+      "body": "I have a button that calls setCount(count + 1). If I console.log(count) on the very next line, it still prints the old number, even though the screen updates correctly a moment later. Why does the log look wrong?",
+      "userId": 1,
+      "tagIds": [
+        1,
+        3,
+        8
+      ],
+      "createdAt": "2026-08-10T09:15:00Z",
+      "solvedAnswerId": 1,
+      "followerIds": [
+        1,
+        2
+      ],
+      "votes": 12,
+      "views": 104,
+      "category": "Frontend Development",
+      "cohortStage": "Core Phase (Week 4)"
+    },
+    {
+      "id": "2",
+      "title": "I get a 'Not Found' page for a route I just added in Flask",
+      "body": "I added a new @app.route('/hello') to my Flask app, but opening it in the browser shows a 404 error. My other routes all work fine.",
+      "userId": 2,
+      "tagIds": [
+        2,
+        4,
+        9,
+        7
+      ],
+      "createdAt": "2026-08-11T14:30:00Z",
+      "solvedAnswerId": null,
+      "followerIds": [
+        2
+      ],
+      "votes": 8,
+      "views": 42,
+      "category": "Backend Development",
+      "cohortStage": "Core Phase (Week 4)"
+    },
+    {
+      "id": "3",
+      "title": "git push keeps saying 'failed to push some refs'",
+      "body": "Every time I try to push my branch I get this rejection. I already ran git pull before pushing, but it still happens.",
+      "userId": 1,
+      "tagIds": [
+        5,
+        9
+      ],
+      "createdAt": "2026-08-12T08:00:00Z",
+      "solvedAnswerId": 3,
+      "followerIds": [
+        1
+      ],
+      "votes": 19,
+      "views": 245,
+      "category": "Version Control",
+      "cohortStage": "Pre-Course"
+    },
+    {
+      "id": "4",
+      "title": "My Python function runs fine but prints None instead of the number I expected",
+      "body": "I wrote a function that works out a total inside itself, but when I print the result of calling it, I get None instead of the number.",
+      "userId": 2,
+      "tagIds": [
+        2,
+        6,
+        8
+      ],
+      "createdAt": "2026-08-13T11:45:00Z",
+      "solvedAnswerId": null,
+      "followerIds": [
+        2,
+        1
+      ],
+      "votes": 5,
+      "views": 18,
+      "category": "Backend Development",
+      "cohortStage": "Phase 0"
+    },
+    {
+      "title": "git",
+      "body": "git doesnt work",
+      "userId": "lNbqnODJ2tQ",
+      "tagIds": [],
+      "createdAt": "2026-08-21T09:12:02.562Z",
+      "solvedAnswerId": null,
+      "followerIds": [
+        "lNbqnODJ2tQ"
+      ],
+      "id": "gDhBN_wtxHQ"
+    }
+  ],
+  "answers": [
+    {
+      "id": "1",
+      "problemId": 1,
+      "userId": 2,
+      "body": "That's normal — React doesn't update state instantly, so logging right after setCount() still shows the old value. The screen is correct because React re-renders on the next cycle. If you want to see the updated value, put your console.log inside a useEffect that watches count instead.",
+      "votes": 5,
+      "createdAt": "2026-08-10T09:40:00Z"
+    },
+    {
+      "id": "2",
+      "problemId": 1,
+      "userId": 3,
+      "body": "Adding on to the above — if you need the new value for something else right away, use the functional update form: setCount(prev => prev + 1), and do anything that depends on the result inside a useEffect instead of right after the call.",
+      "votes": 2,
+      "createdAt": "2026-08-10T10:05:00Z"
+    },
+    {
+      "id": "3",
+      "problemId": 3,
+      "userId": 2,
+      "body": "This usually means someone pushed new commits to that branch after your last pull. Run git pull --rebase origin <branch-name> to bring those in, then push again.",
+      "votes": 4,
+      "createdAt": "2026-08-12T08:20:00Z"
+    },
+    {
+      "id": "4",
+      "problemId": 2,
+      "userId": 1,
+      "body": "Two common causes: the Flask dev server wasn't restarted after you added the route, or there's a small typo in the route path (like a missing slash). Stop the server, restart it, and double-check the path matches exactly what you're typing in the browser.",
+      "votes": 1,
+      "createdAt": "2026-08-11T15:00:00Z"
+    },
+    {
+      "problemId": "gDhBN_wtxHQ",
+      "userId": "lNbqnODJ2tQ",
+      "body": "well check on that",
+      "votes": 0,
+      "createdAt": "2026-08-21T09:12:22.523Z",
+      "id": "Nz07XObQaXQ"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "1",
+      "question": "How do I resolve a merge conflict in Git?",
+      "answer": "Open the conflicting file, look for the <<<<<<< HEAD markers, manually decide which changes to keep, remove the markers, then git add the file and continue the merge or rebase.",
+      "category": "Git"
+    },
+    {
+      "id": "2",
+      "question": "Why does my React component re-render twice in development?",
+      "answer": "This is expected behavior from React's StrictMode in development — it intentionally double-invokes certain functions to help surface side-effect bugs. It does not happen in production builds.",
+      "category": "React"
+    },
+    {
+      "id": "3",
+      "question": "What's the difference between == and === in JavaScript?",
+      "answer": "== compares values after type coercion, while === compares both value and type without coercion. Using === is generally recommended to avoid unexpected bugs.",
+      "category": "JavaScript"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "userId": 1,
+      "type": "vote",
+      "message": "Faith Wanjiru upvoted your answer on 'failed to push some refs'",
+      "read": false,
+      "createdAt": "2026-08-12T08:25:00Z"
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "type": "answer",
+      "message": "Faith Wanjiru replied to your question about your button not updating right away",
+      "read": false,
+      "createdAt": "2026-08-10T09:40:00Z"
+    },
+    {
+      "id": "3",
+      "userId": 2,
+      "type": "follow_response",
+      "message": "A new answer was posted on 'Not Found page for a route in Flask' which you follow",
+      "read": true,
+      "createdAt": "2026-08-11T15:00:00Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
