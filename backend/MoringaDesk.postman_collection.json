@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "MoringaDesk API",
+    "description": "Postman requests for the Flask and PostgreSQL MoringaDesk backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "problemId", "value": "" },
+    { "key": "answerId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/health" }
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register student",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": ["if (pm.response.code === 201) {", "  pm.collectionVariables.set('token', pm.response.json().token);", "}"] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Student\",\n  \"email\": \"postman.student@example.com\",\n  \"password\": \"password123\"\n}" },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": ["if (pm.response.code === 200) {", "  pm.collectionVariables.set('token', pm.response.json().token);", "}"] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"postman.student@example.com\",\n  \"password\": \"password123\"\n}" },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Current user",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/users/me" }
+        }
+      ]
+    },
+    {
+      "name": "Problems",
+      "item": [
+        {
+          "name": "List public problems",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/problems" }
+        },
+        {
+          "name": "Create problem",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": ["if (pm.response.code === 201) {", "  pm.collectionVariables.set('problemId', pm.response.json().id);", "}"] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Postman API test question\",\n  \"body\": \"I am testing the MoringaDesk Flask API from Postman.\",\n  \"tagIds\": []\n}" },
+            "url": "{{baseUrl}}/problems"
+          }
+        },
+        {
+          "name": "Get problem",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/problems/{{problemId}}" }
+        },
+        {
+          "name": "Update problem",
+          "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"votes\": 1\n}" }, "url": "{{baseUrl}}/problems/{{problemId}}" }
+        },
+        {
+          "name": "Delete problem",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/problems/{{problemId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Answers",
+      "item": [
+        {
+          "name": "List answers for problem",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/answers?problemId={{problemId}}" }
+        },
+        {
+          "name": "Create answer",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": ["if (pm.response.code === 201) {", "  pm.collectionVariables.set('answerId', pm.response.json().id);", "}"] }
+          }],
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"problemId\": \"{{problemId}}\",\n  \"body\": \"This answer was created from Postman.\"\n}" }, "url": "{{baseUrl}}/answers" }
+        },
+        {
+          "name": "Update answer",
+          "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"votes\": 2\n}" }, "url": "{{baseUrl}}/answers/{{answerId}}" }
+        },
+        {
+          "name": "Delete answer",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/answers/{{answerId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Update profile",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Student Updated\",\n  \"cohort\": \"FT-09\"\n}" }, "url": "{{baseUrl}}/users/me" }
+        }
+      ]
+    }
+  ]
+}

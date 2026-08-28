@@ -1,16 +1,39 @@
-# React + Vite
+# MoringaDesk
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MoringaDesk is a peer support knowledge base for Moringa students. Students can search recurring technical problems, post questions, add answers, vote on useful solutions, follow discussions, and identify accepted answers.
 
-Currently, two official plugins are available:
+Phase 2 adds a persistent Flask and PostgreSQL API to the existing React and Redux frontend. The backend owns authentication, relational data, authorization, and CRUD operations; the frontend communicates with it through the existing `/api` request layer.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Project structure
 
-## React Compiler
+- `src/`: React + Redux Toolkit frontend
+- `backend/`: Flask REST API, SQLAlchemy models, tests, and PostgreSQL configuration
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Run the backend
 
-## Expanding the ESLint configuration
+Read [backend/README.md](backend/README.md) for setup, the ERD, endpoint contract, environment variables, and tests.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd backend
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+cp .env.example .env
+.venv/bin/python app.py
+```
+
+The frontend expects the API at `/api`. When running the Vite dev server separately, set `VITE_API_URL=http://localhost:5000/api` in a frontend environment file if a proxy is not configured.
+
+For the Vercel deployment, configure `DATABASE_URL`, `JWT_SECRET_KEY`, and `FRONTEND_ORIGIN` in Vercel Project Settings. The included `api/index.py` and `vercel.json` route `/api/*` to Flask while preserving React routes such as `/questions`.
+
+## Frontend
+
+```bash
+npm install
+npm run dev
+```
+
+The backend test suite can run without PostgreSQL using an in-memory SQLite database:
+
+```bash
+.venv/bin/python -m pytest -q backend/test_app.py
+```

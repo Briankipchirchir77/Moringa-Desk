@@ -71,6 +71,9 @@ const authSlice = createSlice({
     clearAuthError: (state) => {
       state.error = null;
     },
+    profileUpdated: (state, action) => {
+      state.user = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -122,7 +125,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearAuthError } = authSlice.actions;
+export const { logout, clearAuthError, profileUpdated } = authSlice.actions;
 export default authSlice.reducer;
 
 // Selectors — most pages/components read auth state through these rather

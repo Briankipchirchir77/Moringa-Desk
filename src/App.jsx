@@ -19,6 +19,7 @@ import AdminContentPage from './features/admin/AdminContentPage';
 import AdminFaqsPage from './features/admin/AdminFaqsPage';
 import AdminReportsPage from './features/admin/AdminReportsPage';
 import NotFoundPage from './components/NotFoundPage';
+import ProfilePage from './features/auth/ProfilePage';
 
 function HomeRedirect() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -43,6 +44,7 @@ function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/ask" element={<AskProblemPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
 
           <Route element={<AdminRoute />}>
