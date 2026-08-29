@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from ..extensions import db
 from ..models import Faq
+from ..utils import admin_required
 
 faqs_bp = Blueprint("faqs", __name__)
 
@@ -17,6 +18,7 @@ def list_faqs():
 
 
 @faqs_bp.post("")
+@admin_required
 def create_faq():
     data = request.get_json(silent=True) or {}
     if not data.get("question") or not data.get("answer"):
@@ -32,6 +34,7 @@ def create_faq():
 
 
 @faqs_bp.patch("/<int:faq_id>")
+@admin_required
 def update_faq(faq_id):
     faq = Faq.query.get(faq_id)
     if not faq:
@@ -45,6 +48,7 @@ def update_faq(faq_id):
 
 
 @faqs_bp.delete("/<int:faq_id>")
+@admin_required
 def delete_faq(faq_id):
     faq = Faq.query.get(faq_id)
     if not faq:

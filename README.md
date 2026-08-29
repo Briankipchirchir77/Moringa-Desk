@@ -31,7 +31,7 @@ point at a deployed instance of the Flask backend in `backend/`.
 **Backend:** Flask + SQLAlchemy + PostgreSQL, in `backend/`. This is the
 real, persistent data layer — not a stand-in.
 
-**Mock fallback:** `src/mocks/` (Mock Service Worker) is kept as a
+**Mock fallback:** `frontend/src/mocks/` (Mock Service Worker) is kept as a
 zero-setup fallback: if the frontend is run *without* `VITE_API_URL` set
 (e.g. the current Vercel deploy, before the backend is separately deployed),
 it intercepts the same `/api/*` calls with realistic in-memory fake data
@@ -108,6 +108,14 @@ SET NULL`) rather than being blocked. `Problem`↔`Tag` and `Problem`↔`User`
 update/delete) is implemented for every resource above via the REST API
 below.
 
+## Repo layout
+
+```
+Moringa-Desk/
+├── frontend/   — React + Vite app (all commands below run from here)
+└── backend/     — Flask + PostgreSQL API
+```
+
 ## Setup
 
 Requires Node.js 18+, Python 3.11+, and PostgreSQL (a local install, or a
@@ -117,7 +125,7 @@ free hosted instance from Render/Railway/Supabase/Neon).
 
 ```bash
 git clone https://github.com/Briankipchirchir77/Moringa-Desk.git
-cd Moringa-Desk
+cd Moringa-Desk/frontend
 npm install
 cp .env.example .env.local   # sets VITE_API_URL — see below
 npm run dev
@@ -194,13 +202,16 @@ token returned from login/register).
 | DELETE 🔒 | `/answers/:id` | Delete |
 | GET | `/tags` | List tags |
 | GET | `/faqs?category=` | List FAQs, optionally filtered |
-| POST | `/faqs` | Create an FAQ |
-| PATCH | `/faqs/:id` | Update an FAQ |
-| DELETE | `/faqs/:id` | Delete an FAQ |
+| POST 🔒 | `/faqs` | Create an FAQ (admin-only) |
+| PATCH 🔒 | `/faqs/:id` | Update an FAQ (admin-only) |
+| DELETE 🔒 | `/faqs/:id` | Delete an FAQ (admin-only) |
 | GET | `/notifications?userId=` | List notifications for a user |
 | POST | `/notifications` | Create a notification |
 | PATCH | `/notifications/:id` | Mark read |
+| GET 🔒 | `/reports/summary` | Totals, top tags, top contributors (admin-only) |
 | GET | `/health` | Health check |
+
+Deleting a `Problem` or `Answer` is restricted to its author or an admin.
 
 ### External API integration
 
@@ -209,7 +220,7 @@ live, public, unauthenticated
 [Stack Exchange API](https://api.stackexchange.com/docs) directly —
 `GET https://api.stackexchange.com/2.3/questions?...&site=stackoverflow`,
 optionally `&tagged={tag}`. See
-[src/features/community/stackExchangeApi.js](src/features/community/stackExchangeApi.js).
+[frontend/src/features/community/stackExchangeApi.js](frontend/src/features/community/stackExchangeApi.js).
 
 ## Tech stack
 
@@ -217,26 +228,33 @@ optionally `&tagged={tag}`. See
 Service Worker, Vitest + React Testing Library, ESLint.
 
 **Backend:** Flask, SQLAlchemy, Flask-Migrate (Alembic), Flask-JWT-Extended,
-Flask-CORS, PostgreSQL, Werkzeug password hashing, Gunicorn (production).
+Flask-CORS, PostgreSQL, Werkzeug password hashing, Gunicorn (production),
+pytest (`backend/tests/`, SQLite in-memory — `pytest` from `backend/`).
 
 ## Known bugs / challenges
 
-- The frontend's mock fallback (`src/mocks/`) resets on every page reload —
+- The frontend's mock fallback (`frontend/src/mocks/`) resets on every page reload —
   data created while running against the mock doesn't persist. The real
   Flask + PostgreSQL backend does persist (that's the whole point of Phase 2).
 - Stack Exchange's public API is rate-limited per IP; heavy repeated use of
   the Explore tab in a short window can return a `throttle_violation` error
   from the API (surfaced as a normal error state, not a crash).
-- `/faqs` and `/notifications` write endpoints aren't currently
-  role-restricted server-side (the frontend only exposes FAQ management to
-  admins, and notifications are created as a side effect of other actions)
-  — worth tightening with proper authorization checks before this API is
-  exposed beyond a class project.
-- No automated end-to-end/browser test suite yet — coverage is unit tests
-  (Vitest) around slices/utilities; manual click-through, curl, and
-  headless-browser screenshot verification were used to confirm auth,
-  session persistence, and full CRUD (including the real Postgres-backed
-  flow) during development.
+- `/notifications` write endpoints aren't role-restricted server-side yet
+  (they're created as a side effect of other authenticated actions, e.g.
+  voting) — worth tightening before this API is exposed beyond a class
+  project. `/faqs` and problem/answer deletes *are* now enforced
+  server-side (admin-only, and author-or-admin respectively).
+- SQLite (used only by the pytest suite, for speed) doesn't enforce
+  foreign keys by default — including the `ON DELETE SET NULL` on
+  `problems.solved_answer_id` — unless told to per-connection; without
+  that, a test could pass against SQLite while the same behavior silently
+  fails against real Postgres. Handled in `backend/app/__init__.py` via a
+  `PRAGMA foreign_keys=ON` connect listener, scoped to SQLite only.
+- No automated end-to-end/browser test suite for the frontend yet —
+  coverage there is unit tests (Vitest) around slices/utilities; manual
+  click-through, curl, and headless-browser screenshot verification were
+  used to confirm auth, session persistence, and full CRUD (including the
+  real Postgres-backed flow) during development.
 - Circular FK note for anyone extending the schema: `problems.solved_answer_id`
   references `answers.id`, while `answers.problem_id` references
   `problems.id` — Alembic's autogenerate detects this cycle (via

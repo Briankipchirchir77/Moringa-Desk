@@ -1,4 +1,8 @@
-# Optional: only needed for start_test_db.py, a convenience for running
-# the backend locally without installing/configuring Postgres yourself.
+# Optional: dev-only tooling.
+# - pgserver: start_test_db.py, a convenience for running the backend
+#   locally without installing/configuring Postgres yourself.
+# - pytest: the test suite in tests/ (uses an in-memory SQLite DB, so it
+#   doesn't need Postgres at all).
 -r requirements.txt
 pgserver==0.1.4
+pytest==8.4.2

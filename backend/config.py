@@ -24,3 +24,10 @@ class Config:
     # the deployed Vercel URL). '*' during local dev is fine since there's
     # no cookie-based auth (JWT is sent via Authorization header).
     CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*")
+
+
+class TestConfig(Config):
+    """Used by the test suite: a fast, throwaway in-memory database."""
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    JWT_SECRET_KEY = "test-jwt-secret"

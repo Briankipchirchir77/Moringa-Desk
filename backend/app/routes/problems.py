@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..extensions import db
 from ..models import Problem, Tag, User
+from ..utils import current_user
 
 problems_bp = Blueprint("problems", __name__)
 
@@ -75,6 +76,9 @@ def delete_problem(problem_id):
     problem = Problem.query.get(problem_id)
     if not problem:
         return jsonify({"message": "Question not found."}), 404
+    actor = current_user()
+    if not actor or (actor.role != "admin" and actor.id != problem.user_id):
+        return jsonify({"message": "Not allowed."}), 403
     db.session.delete(problem)
     db.session.commit()
     return "", 204
