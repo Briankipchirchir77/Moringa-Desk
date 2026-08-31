@@ -60,14 +60,14 @@ export const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="email">Student Email</label>
+              <label htmlFor="email">Student/Admin Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="alex.kimani@moringaschool.com"
+                placeholder="alex.kimani@moringaschool.com (student) or sarah.jane@moringaschool.com (admin)"
                 required
               />
             </div>

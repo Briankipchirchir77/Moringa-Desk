@@ -363,11 +363,14 @@ textarea {
   width: 34px;
   height: 34px;
   border-radius: 9px;
-  background: var(--orange-500);
+  /* white, not orange — the real Moringa mark is itself orange, so an
+     orange badge behind it would swallow it */
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
+  padding: 5px;
 }
 .auth-brand-copy h1 {
   color: var(--white);
