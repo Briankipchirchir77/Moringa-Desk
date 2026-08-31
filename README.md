@@ -1,5 +1,7 @@
 # MoringaDesk
 
+Contribution refresh: 2026-08-31.
+
 MoringaDesk is a peer support knowledge base for Moringa students. Students can search recurring technical problems, post questions, add answers, vote on useful solutions, follow discussions, and identify accepted answers.
 
 Phase 2 adds a persistent Flask and PostgreSQL API to the existing React and Redux frontend. The backend owns authentication, relational data, authorization, and CRUD operations; the frontend communicates with it through the existing `/api` request layer.
